@@ -99,98 +99,85 @@ body {
     box-sizing: border-box;
 }
 
-/* --- NUEVA DISTRIBUCIÓN DEL ENCABEZADO --- */
-.pass-header-group {
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(191, 149, 63, 0.3);
-    padding-bottom: 15px;
+/* --- REDISEÑO TOTAL: TARJETA FLEXIBLE Y SIN DESBORDAMIENTOS --- */
+.pass-container {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    cursor: pointer;
+    width: 90%;
+    max-width: 480px; /* Más ancha para que no se salgan los nombres */
+    transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s, visibility 0s linear 0.6s;
+    height: auto; /* IMPORTANTE: Quitamos el límite de altura */
 }
 
-.pass-label {
-    display: block;
-    color: var(--oro-brillante);
-    font-size: 0.7rem;
-    letter-spacing: 3px;
-    margin-bottom: 5px;
+.glass-pass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 12px;
+    border: 1px solid rgba(252, 226, 163, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
 }
 
-.guest-name {
-    color: #ffffff;
-    font-size: 1.5rem;
-    margin: 5px 0;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
-.guest-count {
-    color: var(--oro-mate);
-    font-size: 0.9rem;
-    margin: 0;
-    font-weight: 300;
-}
-
-.pass-title {
-    font-family: 'Great Vibes', cursive;
-    color: #ffffff; /* Blanco puro */
-    font-size: clamp(1.8rem, 10vw, 3rem); /* Un poco más pequeño para que quepa bien */
-    margin: 0;
-    /* CORRECCIÓN DE VISIBILIDAD: Sombra oscura para resaltar sobre el fondo */
-    text-shadow: 0 2px 4px rgba(0,0,0,1); 
-    text-align: center;
-}
-
-.pass-subtitle {
-    font-family: 'Cinzel Decorative';
-    color: var(--oro-rico);
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-}
-
-.pass-info-row {
+.pass-inner-border {
+    border: 1px solid rgba(191, 149, 63, 0.25);
+    border-radius: 15px;
+    padding: 35px 20px;
     display: flex;
-    gap: 50px; /* Más separación horizontal */
-    margin: 15px 0; /* Menos margen vertical */
-    border-top: 1px solid rgba(191, 149, 63, 0.2);
-    padding-top: 15px;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px; 
 }
 
-.pass-item span {
-    display: block;
-    color: var(--oro-brillante);
-    font-size: 0.85rem;   /*tamano de texto de fecha y hora*/ 
-    letter-spacing: 2px;
-    text-shadow: 0 1px 1px rgba(0,0,0,0.8);
+/* Sección del Invitado (Ajustada) */
+.pass-guest-section { text-align: center; width: 100%; }
+.pass-label { 
+    display: block; color: var(--oro-brillante); 
+    font-size: 0.7rem; letter-spacing: 3px; margin-bottom: 8px;
+}
+.guest-name { 
+    color: #fff; font-size: 1.5rem; margin: 0; 
+    font-weight: 500; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    word-wrap: break-word; line-height: 1.2;
+}
+.guest-count-badge {
+    display: inline-block; margin-top: 10px; padding: 5px 18px;
+    border-radius: 20px; border: 1px solid rgba(191, 149, 63, 0.4);
+    background: rgba(191, 149, 63, 0.1);
+    color: var(--oro-brillante); font-size: 0.85rem;
 }
 
-.pass-item p {
-    color: #ffffff; /* Blanco puro */
-    margin: 2px 0 0;
-    font-size: 0.95rem;   /*datos de fecha y hora tamaño de texto*/
-    font-weight: 600;
-    /* CORRECCIÓN DE VISIBILIDAD: Sombra oscura para resaltar */
-    text-shadow: 0 1px 3px rgba(0,0,0,1);
+/* Sección Título Quinceañera */
+.pass-main-title { text-align: center; }
+.pass-title { 
+    font-family: 'Great Vibes'; font-size: 3.2rem; color: #fff;
+    margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+.pass-subtitle {
+    font-family: 'Cinzel Decorative'; color: var(--oro-rico);
+    font-size: 0.9rem; letter-spacing: 2px; margin-top: 5px;
 }
 
-/* --- BOTÓN DE ENTRADA CON RELIEVE --- */
+/* Sección de Datos (Grid de 3 columnas) */
+.pass-info-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    width: 100%; border-top: 1px solid rgba(191, 149, 63, 0.2);
+    padding-top: 20px; gap: 10px;
+}
+.pass-data-item { text-align: center; }
+.pass-data-item span { color: var(--oro-brillante); font-size: 0.65rem; letter-spacing: 1px; display: block; }
+.pass-data-item p { color: #fff; margin: 5px 0 0; font-size: 0.9rem; font-weight: 600; }
+
+/* Botón con el efecto GLOW que preguntaste */
 .pass-action-btn {
     background: linear-gradient(145deg, #fce2a3, #b8860b);
-    color: var(--azul-imperial);
-    padding: 12px 28px;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    margin-top: 15px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.4);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(191, 149, 63, 0.5);
-}
-
-.pass-action-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+    color: var(--azul-imperial); padding: 12px 35px; border-radius: 50px;
+    font-weight: 700; font-size: 0.8rem; text-transform: uppercase;
+    margin-top: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    animation: glow 2s infinite alternate; /* ACTIVAMOS TU ANIMACIÓN */
 }
 
 @keyframes glow { 
@@ -499,57 +486,37 @@ section {
 /* --- 3. MÓVIL IPHONE 13 MINI (IMAGEN 23) --- */
 @media (max-width: 480px) {
     /* --- AJUSTE CRÍTICO PARA QUE NADA SE SALGA EN MÓVIL --- */
-    .pass-header-group {
-        margin-bottom: 10px !important;
-        padding-bottom: 8px !important;
-    }
-
-    .guest-name {
-        font-size: 1.2rem !important; /* Más pequeño para que no se salga */
-        line-height: 1.2 !important;
-        padding: 0 10px;
-    }
-
-    .guest-count {
-        font-size: 0.85rem !important;
-    }
-
-    .pass-title {
-        font-size: 1.6rem !important; /* Ajustamos el nombre de Jennifer */
-        margin-top: 10px !important;
-    }
-    .pass-container {
-        width: 85%; max-width: 320px; aspect-ratio: 9 / 16; max-height: none; 
+    .pass-container { 
+        width: 92%; 
+        /* Retraso de 1.7s para que no haya parpadeo al cerrar */
         transition: opacity 0.5s ease 1.7s, transform 0.5s ease 1.7s, visibility 0s linear 1.7s;
     }
-
-    .pass-title {
-        font-size: 1.8rem !important;
-        margin-top: 10px;
-    }
+    .pass-inner-border { padding: 25px 15px; gap: 15px; }
     
-    .pass-info-row {
-        flex-direction: column; align-items: center; gap: 0 !important;      
-        margin: 20px 0; padding: 5px 0;
-        border-top: 1px solid rgba(191, 149, 63, 0.3);
-        border-bottom: 1px solid rgba(191, 149, 63, 0.3);
-    }
-    .pass-item { width: 100%; padding: 12px 0; border-bottom: 1px solid rgba(191, 149, 63, 0.15); }
-    .pass-item:last-child { border-bottom: none; }
-
+    .guest-name { font-size: 1.3rem !important; }
+    .pass-title { font-size: 2.5rem !important; }
     
-    .pass-item span { font-size: 0.75rem !important; }
-    .pass-item p { font-size: 1.1rem !important; margin-top: 5px; }
+    /* EFECTO IMAGEN 23: Los datos se apilan verticalmente con líneas divisorias */
+    .pass-info-grid { 
+        grid-template-columns: 1fr; 
+        gap: 0; 
+    }
+    .pass-data-item { 
+        padding: 12px 0; 
+        border-bottom: 1px solid rgba(191, 149, 63, 0.15); 
+    }
+    .pass-data-item:last-child { border-bottom: none; }
 
-    /* AJUSTE DE ANCHO PARA IPHONE: Reducimos el padding y bordes dobles */
-    .parchment { padding: 0 20px !important; width: 95% !important; box-sizing: border-box; }
-    .invitation-wrapper.open .parchment { padding: 60px 20px !important; }
-
+    /* Ajuste para que el nombre Jennifer no se asfixie */
     .princess-name {
-        font-size: 2.1rem !important; 
+        font-size: 2.2rem !important; 
         line-height: 1.1 !important;
         margin: 20px 0 !important;
     }
+
+    /* Ancho optimizado para el iPhone 13 mini */
+    .parchment { padding: 0 20px !important; width: 95% !important; box-sizing: border-box; }
+    .invitation-wrapper.open .parchment { padding: 60px 20px !important; }
 }
 
 /* --- CONTROL DE ÍCONOS Y ESTRELLAS (FUERA DEL @MEDIA) --- */
