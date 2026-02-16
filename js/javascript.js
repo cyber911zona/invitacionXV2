@@ -1,13 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. LÓGICA PARA LEER EL NOMBRE DEL INVITADO ---
-    // Esta parte lee el nombre desde el link (?n=Nombre_Apellido)
+    // --- 1. LÓGICA PARA LEER NOMBRE Y NÚMERO DE PASES ---
     const urlParams = new URLSearchParams(window.location.search);
+    
+    // Leemos el nombre (?n=)
     const nombreInvitado = urlParams.get('n'); 
-    const displayElement = document.getElementById('invitadoNombre');
+    const displayNombre = document.getElementById('invitadoNombre');
 
-    if (nombreInvitado && displayElement) {
+    // Leemos los pases (&p=)
+    const pasesInvitado = urlParams.get('p'); 
+    const displayPases = document.getElementById('numPases');
+
+    // Inyectamos el nombre
+    if (nombreInvitado && displayNombre) {
         // Convierte guiones bajos en espacios y pone todo en MAYÚSCULAS
-        displayElement.innerText = nombreInvitado.replace(/_/g, ' ').toUpperCase();
+        displayNombre.innerText = nombreInvitado.replace(/_/g, ' ').toUpperCase();
+    }
+
+    // Inyectamos el número de pases
+    if (pasesInvitado && displayPases) {
+        displayPases.innerText = pasesInvitado;
+    } else if (displayPases) {
+        displayPases.innerText = "1"; // Valor por defecto si no hay número en el link
     }
 
     // --- 2. LÓGICA DE APERTURA Y CIERRE (SIN PARPADEO) ---
@@ -47,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 3. LÓGICA PARA EL ACORDEÓN INTERACTIVO ---
-    // Mantenemos esta parte para que tus secciones desplegables sigan funcionando
     document.querySelectorAll('.accordion-header').forEach(header => {
         header.addEventListener('click', () => {
             const item = header.parentElement;
