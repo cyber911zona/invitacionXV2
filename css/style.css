@@ -1,0 +1,594 @@
+/* --- VARIABLES: ORO REAL (MENOS AMARILLO) --- */
+:root {
+    --azul-imperial: #002366;
+    --azul-profundo-fondo: #000a1a;
+    --azul-claro-luz: #004e92;
+    --azul-cristal: #e1f5fe;
+    /* Oro metálico real: más bronce/platino */
+    --oro-rico: #bf953f;       
+    --oro-brillante: #fcf6ba;  
+    --blanco-seda: #fdfdfd;
+    --transicion-lenta: all 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    margin: 0; 
+    display: flex; 
+    justify-content: center; 
+    /* CAMBIO: Usamos flex-start para que el scroll sea natural desde arriba */
+    align-items: flex-start; 
+    min-height: 100vh; 
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--azul-profundo-fondo);
+    background-image: 
+        radial-gradient(circle at 50% 40%, rgba(0, 78, 146, 0.4) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(191, 149, 63, 0.1) 0%, transparent 40%);
+    overflow-x: hidden;
+    /* Añadimos un poco de aire arriba para que el pase no pegue al borde */
+    padding-top: 20px; 
+}
+
+/* --- FONDO ANIMADO --- */
+.stars-layer {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+    background-image: radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+                      radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0));
+    background-size: 200px 200px; opacity: 0.5;
+    animation: twinkle 4s infinite ease-in-out; 
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.bokeh-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+.bokeh-light {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(100, 181, 246, 0.3) 0%, rgba(0, 35, 102, 0) 70%);
+    animation: floatBokeh 25s infinite linear; opacity: 0;
+}
+@keyframes floatBokeh {
+    0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+    20% { opacity: 0.6; }
+    100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+}
+
+/* --- TARJETA ADAPTATIVA (PC y MÓVIL) --- */
+.pass-container {
+    position: fixed; /* Mantiene la tarjeta centrada */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    cursor: pointer;
+    transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s, visibility 0s linear 0.6s;
+    
+    /* FORMA PARA PC (Horizontal) */
+    width: 90%;
+    max-width: 550px;
+    aspect-ratio: 16 / 9; 
+    height: auto;
+    max-height: 280px;
+}
+.glass-pass {
+    /* MÁS TRANSPARENTE: Bajamos la opacidad del blanco a 0.02 */
+    background: rgba(255, 255, 255, 0.02);
+    /* Menos desenfoque para que se vea más el fondo */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    
+    border-radius: 15px; /* Esquinas menos redondeadas para look tarjeta */
+    padding: 8px; /* Marco exterior más fino */
+    border: 1px solid rgba(252, 226, 163, 0.5); /* Borde dorado sutil */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(252, 226, 163, 0.05);
+    height: 100%; /* Ocupa toda la altura del contenedor */
+    box-sizing: border-box;
+}
+
+.pass-inner-border {
+    border: 1px solid rgba(191, 149, 63, 0.2);
+    border-radius: 12px;
+    /* MENOS ESPACIO VERTICAL: Clave para la forma rectangular */
+    padding: 40px 20px; /* Aumentamos el espacio interno */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;/* Centra el contenido verticalmente */
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.pass-tag {
+    color: var(--oro-brillante);
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    /* Sombra para legibilidad */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+.pass-title {
+    font-family: 'Great Vibes', cursive;
+    color: #ffffff; /* Blanco puro */
+    font-size: clamp(1.8rem, 10vw, 3rem); /* Un poco más pequeño para que quepa bien */
+    margin: 0;
+    /* CORRECCIÓN DE VISIBILIDAD: Sombra oscura para resaltar sobre el fondo */
+    text-shadow: 0 2px 4px rgba(0,0,0,1); 
+    text-align: center;
+}
+
+.pass-subtitle {
+    font-family: 'Cinzel Decorative';
+    color: var(--oro-rico);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+.pass-info-row {
+    display: flex;
+    gap: 50px; /* Más separación horizontal */
+    margin: 15px 0; /* Menos margen vertical */
+    border-top: 1px solid rgba(191, 149, 63, 0.2);
+    padding-top: 15px;
+}
+
+.pass-item span {
+    display: block;
+    color: var(--oro-brillante);
+    font-size: 0.85rem;   /*tamano de texto de fecha y hora*/ 
+    letter-spacing: 2px;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.8);
+}
+
+.pass-item p {
+    color: #ffffff; /* Blanco puro */
+    margin: 2px 0 0;
+    font-size: 0.95rem;   /*datos de fecha y hora tamaño de texto*/
+    font-weight: 600;
+    /* CORRECCIÓN DE VISIBILIDAD: Sombra oscura para resaltar */
+    text-shadow: 0 1px 3px rgba(0,0,0,1);
+}
+
+/* --- BOTÓN DE ENTRADA CON RELIEVE --- */
+.pass-action-btn {
+    background: linear-gradient(145deg, #fce2a3, #b8860b);
+    color: var(--azul-imperial);
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    margin-top: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(191, 149, 63, 0.5);
+}
+
+.pass-action-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+}
+
+@keyframes glow { 
+    from { transform: scale(1); box-shadow: 0 0 20px var(--oro-rico); }
+    to { transform: scale(1.05); box-shadow: 0 0 40px var(--oro-brillante); }
+}
+
+
+/* --- PERGAMINO CENTRADO Y ELEGANTE --- */
+.parchment {
+    max-width: 500px; /* LIMITE DE ANCHO: Evita el efecto estirado de la imagen 2 */
+    width: 90%; 
+    margin: 40px auto; 
+    padding: 0 50px; 
+    background-color: #fdfaf2; 
+    background-image: url("https://www.transparenttextures.com/patterns/linen.png");
+    border-radius: 4px;
+    border-left: 12px double var(--azul-imperial);
+    border-right: 12px double var(--azul-imperial);
+    /* Mantén esta línea que ya tenías para el borde sutil arriba y abajo */
+    border: 1px solid rgba(191, 149, 63, 0.2);
+    max-height: 0; opacity: 0; overflow: hidden;
+    transition: var(--transicion-lenta);
+    text-align: center; 
+    position: relative;
+    box-sizing: border-box;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.8);
+    /* AÑADE ESTA LÍNEA para el borde sutil dorado */
+    border: 1px solid rgba(191, 149, 63, 0.2); /* Borde sutil exterior */
+}
+
+.parchment::before {
+    content: '';
+    position: absolute;
+    top: 15px; bottom: 15px; left: 15px; right: 15px;
+    border: 2px solid rgba(191, 149, 63, 0.3); /* MARCO INTERNO DORADO */
+    pointer-events: none;
+    z-index: 1;
+}
+
+.invitation-wrapper.open .parchment { 
+    max-height: 5000px; 
+    opacity: 1; 
+    padding: 80px 50px; }
+
+/* --- ESTADO INICIAL OCULTO PARA TODOS --- */
+/* Esto asegura que nada se vea hasta que la animación comience */
+.intro-text, .parents, .celebration-msg, .anim-wrapper, 
+.info-section, .dress-code-card, .gold-line-bottom, .close-seal-wrapper {
+    opacity: 0;
+}
+/* --- ANIMACIONES DE REVELADO --- */
+@keyframes revealUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- ACTIVAR ANIMACIÓN PARA TODOS LOS ELEMENTOS --- */
+.invitation-wrapper.open .intro-text,
+.invitation-wrapper.open .parents,
+.invitation-wrapper.open .celebration-msg, 
+.invitation-wrapper.open .anim-wrapper,
+.invitation-wrapper.open .info-section,
+.invitation-wrapper.open .dress-code-card, /* <-- AQUÍ ESTABA EL ERROR (Faltaba la coma) */
+.invitation-wrapper.open .gold-line-bottom,
+.invitation-wrapper.open .close-seal-wrapper { /* Añadimos el sello también */
+    animation: revealUp 1.2s ease-out forwards;
+}
+/* Ahora, AÑADE esta nueva regla para animar el contenedor del nombre */
+.invitation-wrapper.open .anim-wrapper {
+    animation: revealUp 1.2s ease-out forwards;
+    animation-delay: 1.4s;
+}
+.invitation-wrapper.open .pass-container {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s linear;
+}
+
+
+/* --- TIEMPOS DE ESPERA PARA EL EFECTO CASCADA --- */
+.invitation-wrapper.open .intro-text { animation-delay: 0.6s; }
+.invitation-wrapper.open .parents { animation-delay: 0.9s; }
+.invitation-wrapper.open .celebration-msg { animation-delay: 1.1s; }
+.invitation-wrapper.open .anim-wrapper { animation-delay: 1.4s; }
+
+/* 1. Ceremonia */
+.invitation-wrapper.open .info-section:nth-of-type(1) { animation-delay: 1.7s; }
+
+/* 2. Recepción */
+.invitation-wrapper.open .info-section:nth-of-type(2) { animation-delay: 2.0s; }
+
+/* 3. Código de Vestimenta */
+.invitation-wrapper.open .dress-code-card { animation-delay: 2.3s; }
+
+/* 4. Confirmación */
+.invitation-wrapper.open .info-section:nth-of-type(3) { animation-delay: 2.6s; }
+
+/* 5. Mensaje final "¡Te esperamos!" */
+.invitation-wrapper.open .info-section:nth-of-type(4) { animation-delay: 2.9s; }
+
+/* 6. Línea decorativa y Sello de cerrar */
+.invitation-wrapper.open .gold-line-bottom { animation-delay: 3.2s; }
+.invitation-wrapper.open .close-seal-wrapper { animation-delay: 3.5s; }
+
+.celebration-msg {
+    margin: 40px 0;
+    color: #444;
+}
+
+/* --- TEXTOS Y TAMAÑOS (CENTRADO) --- */
+.intro-text {
+    font-size: 0.95rem;  /* Un poquito más grande */
+    line-height: 2;      /* MÁS espacio entre renglones (antes era 1.8) */
+    max-width: 85%;
+    margin: 20px auto;   /* MÁS espacio arriba y abajo (antes era 20px) */
+    color: #444;
+    /* font-style: italic;  <-- BORRA O COMENTA ESTA LÍNEA para quitar la cursiva */
+    font-style: normal; /* QUITAMOS CURSIVA */
+    text-align: center;
+}
+
+.princess-name {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2rem, 8vw, 3.8rem);  /* Tamaño ajustado para elegancia */
+    background: linear-gradient(to right, #b8860b, #fce2a3, #b8860b);/* Dorado más brillante y notorio */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 10px 0;
+    filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.2));
+    animation: floating 3s ease-in-out infinite;
+    line-height: 1.1;
+    display: block;
+    width: 100%;        
+}
+
+@keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+.parents {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 600; 
+    font-size: 1.2rem;
+    color: var(--azul-imperial); 
+    text-transform: uppercase; 
+    margin: 40px 0;
+}
+
+
+
+/* --- DETALLES Y BOTONES --- */
+h2 { 
+    font-family: 'Cinzel Decorative'; 
+    color: var(--oro-rico); 
+    border-bottom: 1px solid var(--oro-rico); 
+    font-size: 1.1rem; 
+    display: inline-block; 
+    margin-bottom: 10px; 
+    margin-top: 0;
+}
+
+/* --- BOTONES DE UBICACIÓN CON RELIEVE --- */
+.btn-glass-gold {
+    text-decoration: none; 
+    display: inline-block; 
+    padding: 12px 30px; 
+    margin-top: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid var(--oro-rico); 
+    border-radius: 50px; 
+    color: var(--azul-imperial);
+    font-weight: 600;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3), inset 0 0 10px rgba(191, 149, 63, 0.2);
+    transition: all 0.4s ease;
+}
+
+.btn-glass-gold:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+    border-color: var(--oro-brillante);
+}
+
+.confirm { background: var(--azul-imperial); color: var(--oro-brillante); }
+
+.gold-line-top, .gold-line-bottom {
+    height: 1px; background: linear-gradient(to right, transparent, var(--oro-rico), transparent);
+    margin: 40px auto; width: 70%; position: relative;
+}
+
+/* Reemplaza el bloque de las estrellas al final del archivo */
+.gold-line-top::after, .gold-line-bottom::after {
+    content: '✦'; 
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--oro-rico);
+    background-color: #fdfaf2; 
+    padding: 0 15px;
+    font-size: 1.2rem;
+    z-index: 2;
+}
+
+.dress-code-card { 
+    background: rgba(0, 35, 102, 0.03); 
+    padding: 20px; 
+    border-radius: 15px; 
+    margin: 30px 0; 
+    border: 1px dashed rgba(191, 149, 63, 0.3); }
+
+/* --- CAMBIO DE COLOR DEL AVISO AZUL --- */
+/* Busca la clase .blue-notice */
+.blue-notice {
+    color: var(--azul-imperial); /* CAMBIA el color rojo por tu azul elegante */
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: block;
+    margin-top: 15px;
+    letter-spacing: 1px; /* Un poco de espaciado para que se vea más fino */
+}
+
+section { 
+    /* 10px de separación arriba y 40px abajo para no amontonar lo siguiente */
+    margin: 20px 0 60px 0; 
+}
+
+/* SELLO DE CIERRE */
+.close-seal-wrapper { display: flex; justify-content: center; align-items: center; margin: 30px auto 10px; cursor: pointer; }
+
+/* SELLO DE CIERRE CON RELIEVE */
+/* --- SELLO DE CIERRE CON RELIEVE --- */
+.wax-seal.final-seal {
+    width: 80px; 
+    height: 80px; 
+    border: 3px solid var(--oro-rico); 
+    background: radial-gradient(circle at 30% 30%, #002366, #000a1a);
+    border-radius: 50%; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(191, 149, 63, 0.3);
+    transition: all 0.4s ease;
+}
+
+.wax-seal.final-seal:hover {
+    transform: translateY(-5px) scale(1.05);
+}
+
+/* --- COLOR DE LETRAS EN EL SELLO DE CERRAR --- */
+
+/* La "XV" en dorado */
+/* La "XV" con sombra de profundidad */
+.wax-seal.final-seal .seal-inner span {
+    color: var(--oro-brillante);
+    font-size: 1.4rem;
+    font-family: 'Cinzel Decorative', serif;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Sombra interna */
+}
+
+/* La palabra "CERRAR" */
+.wax-seal.final-seal .seal-text {
+    color: #ffffff;
+    font-size: 0.6rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-top: -5px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* --- ESTILO ACORDEÓN INTERACTIVO --- */
+.accordion-container { width: 100%; margin: 20px 0; }
+.accordion-item { margin-bottom: 15px; border-radius: 12px; overflow: hidden; }
+
+.accordion-header {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--oro-rico);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+}
+
+.header-content { display: flex; align-items: center; gap: 15px; }
+.mini-icon { width: 25px; height: auto; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); }
+.accordion-header span { color: var(--azul-imperial); font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; }
+.arrow-gold { color: var(--oro-rico); transition: transform 0.3s ease; }
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    background: rgba(191, 149, 63, 0.03);
+    transition: max-height 0.5s ease-out, padding 0.5s ease;
+    padding: 0 20px;
+}
+
+/* Estado Activo del Acordeón */
+.accordion-item.active .accordion-content { max-height: 400px; padding: 25px 20px; border-bottom: 1px solid rgba(191, 149, 63, 0.2); }
+.accordion-item.active .arrow-gold { transform: rotate(180deg); }
+.accordion-item.active .accordion-header { background: rgba(191, 149, 63, 0.1); }
+
+/* --- BLOQUE FINAL CORREGIDO: SIN PARPADEO Y ANCHO PERFECTO --- */
+/* --- BLOQUE FINAL: MÓVIL (IMAGEN 23) + CERO PARPADEO --- */
+
+@media (max-width: 480px) {
+    .pass-container {
+        width: 85%;
+        max-width: 320px;
+        aspect-ratio: 9 / 16; 
+        max-height: none; 
+        /* RETRASO DE APARICIÓN: Espera 1.7s a que el pergamino cierre y el scroll termine */
+        transition: opacity 0.5s ease 1.7s, transform 0.5s ease 1.7s, visibility 0s linear 1.7s;
+    }
+
+    .pass-title {
+        font-size: 1.8rem !important;
+        margin-top: 10px;
+    }
+    
+    .pass-info-row {
+        flex-direction: column; 
+        align-items: center;
+        gap: 0 !important;      
+        margin: 20px 0;
+        padding: 5px 0;
+        border-top: 1px solid rgba(191, 149, 63, 0.3);
+        border-bottom: 1px solid rgba(191, 149, 63, 0.3);
+        width: 100%;
+    }
+
+    .pass-item {
+        width: 100%;
+        padding: 12px 0; 
+        text-align: center;
+        border-bottom: 1px solid rgba(191, 149, 63, 0.15);
+    }
+
+    .pass-item:last-child { border-bottom: none; }
+
+    .pass-item span { font-size: 0.75rem !important; }
+    .pass-item p { font-size: 1.1rem !important; margin-top: 5px; }
+
+    /* AJUSTE DE ANCHO PARA IPHONE: Reducimos el padding y bordes dobles */
+    .parchment {
+        padding: 0 20px !important;
+        width: 95% !important;
+        border-left: 6px double var(--azul-imperial) !important;
+        border-right: 6px double var(--azul-imperial) !important;
+    }
+
+    .invitation-wrapper.open .parchment {
+        padding: 60px 20px !important;
+    }
+
+    .princess-name {
+        font-size: 2.1rem !important; 
+        line-height: 1.1 !important;
+        margin: 20px 0 !important;
+    }
+}
+
+/* --- CONTROL DE ÍCONOS Y ESTRELLAS (FUERA DEL @MEDIA) --- */
+.section-icon {
+    width: 50px !important; max-width: 50px;
+    margin: 0 auto 15px auto; display: block; opacity: 0.8;
+}
+
+.dress-code-card .section-icon { width: 70px !important; max-width: 70px; }
+
+.invitation-wrapper.open .section-icon {
+    animation: revealUp 1.2s ease-out forwards;
+}
+
+.shooting-star {
+    position: fixed; top: 0; left: 0; width: 2px; height: 2px;
+    background: #fff; opacity: 0; z-index: -1; animation: shooting 5s infinite;
+}
+.star-1 { top: 10%; left: 80%; animation-delay: 0s; }
+.star-2 { top: 30%; left: 90%; animation-delay: 2s; }
+
+@keyframes shooting {
+    0% { transform: translate(0, 0) rotate(-45deg); opacity: 1; }
+    20% { transform: translate(-400px, 400px) rotate(-45deg); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+.accordion-header {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--oro-rico);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Relieve */
+    transition: all 0.3s ease;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    background: rgba(191, 149, 63, 0.05);
+    border-radius: 0 0 10px 10px;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 300px; /* Se expande */
+    padding: 20px 0;
+}
