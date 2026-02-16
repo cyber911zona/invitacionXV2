@@ -99,14 +99,35 @@ body {
     box-sizing: border-box;
 }
 
-.pass-tag {
+/* --- NUEVA DISTRIBUCIÓN DEL ENCABEZADO --- */
+.pass-header-group {
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(191, 149, 63, 0.3);
+    padding-bottom: 15px;
+}
+
+.pass-label {
+    display: block;
     color: var(--oro-brillante);
-    font-size: 0.65rem;
-    letter-spacing: 4px;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
     margin-bottom: 5px;
-    font-weight: 600;
-    /* Sombra para legibilidad */
-    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+.guest-name {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin: 5px 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.guest-count {
+    color: var(--oro-mate);
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 300;
 }
 
 .pass-title {
@@ -477,6 +498,26 @@ section {
 
 /* --- 3. MÓVIL IPHONE 13 MINI (IMAGEN 23) --- */
 @media (max-width: 480px) {
+    /* --- AJUSTE CRÍTICO PARA QUE NADA SE SALGA EN MÓVIL --- */
+    .pass-header-group {
+        margin-bottom: 10px !important;
+        padding-bottom: 8px !important;
+    }
+
+    .guest-name {
+        font-size: 1.2rem !important; /* Más pequeño para que no se salga */
+        line-height: 1.2 !important;
+        padding: 0 10px;
+    }
+
+    .guest-count {
+        font-size: 0.85rem !important;
+    }
+
+    .pass-title {
+        font-size: 1.6rem !important; /* Ajustamos el nombre de Jennifer */
+        margin-top: 10px !important;
+    }
     .pass-container {
         width: 85%; max-width: 320px; aspect-ratio: 9 / 16; max-height: none; 
         transition: opacity 0.5s ease 1.7s, transform 0.5s ease 1.7s, visibility 0s linear 1.7s;
