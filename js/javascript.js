@@ -1,4 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- 1. LÓGICA PARA LEER NOMBRE Y NÚMERO DE PASES (FALTABA ESTO) ---
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Leemos el nombre (?n=)
+    const nombreInvitado = urlParams.get('n'); 
+    const displayNombre = document.getElementById('invitadoNombre');
+
+    // Leemos los pases (&p=)
+    const pasesInvitado = urlParams.get('p'); 
+    const displayPases = document.getElementById('numPases');
+
+    // Inyectamos el nombre en la tarjeta
+    if (nombreInvitado && displayNombre) {
+        // Convierte guiones bajos en espacios y pone todo en MAYÚSCULAS
+        displayNombre.innerText = nombreInvitado.replace(/_/g, ' ').toUpperCase();
+    }
+
+    // Inyectamos el número de pases
+    if (pasesInvitado && displayPases) {
+        displayPases.innerText = pasesInvitado;
+    } else if (displayPases) {
+        displayPases.innerText = "1"; // Valor por defecto
+    }
+
+    // --- 2. LÓGICA DE APERTURA, CIERRE Y MÚSICA (LO QUE YA TENÍAS) ---
+    // ... aquí sigue el resto de tu código de sealBtn, music, etc.
+    
         // --- 2. LÓGICA DE APERTURA, CIERRE Y MÚSICA ---
         const sealBtn = document.getElementById('bowBtn');
         const closeBtn = document.getElementById('closeBtn');
