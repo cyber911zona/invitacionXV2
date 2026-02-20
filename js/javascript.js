@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 2. LÓGICA DE APERTURA, CIERRE Y MÚSICA INTELIGENTE ---
     // Esta parte controla los botones de entrar, cerrar y el sonido
-    const sealBtn = document.getElementById('bowBtn'); // Identifica el pase (la tarjeta de inicio)
+    const sealBtn = document.getElementById('entrarBtn'); // Identifica el pase (la tarjeta de inicio)
     const closeBtn = document.getElementById('closeBtn'); // Identifica el sello de cerrar al final
     const wrapper = document.getElementById('wrapper'); // Identifica toda la estructura de la invitación
     const music = document.getElementById('bgMusic'); // Identifica la canción elegida
