@@ -132,7 +132,7 @@ body {
     left: 50%; /* 50% desde la izquierda */
     transform: translate(-50%, -50%); /* Centrado matemático perfecto */
     z-index: 100; /* Lo pone encima del fondo */
-    cursor: pointer; /* Cambia el ratón por una mano al pasar por encima */
+    cursor: default; /* Cambia el ratón por una mano al pasar por encima */
     width: 92%; /* Ancho en celulares */
     max-width: 500px; /* Ancho máximo en computadoras */
     height: auto; /* Altura flexible */
@@ -250,6 +250,7 @@ body {
     margin-top: 10px; /* Separación de lo de arriba */
     box-shadow: 0 10px 20px rgba(0,0,0,0.3); /* Sombra del botón */
     animation: glow 2s infinite alternate; /* Activa el parpadeo del brillo */
+    cursor: pointer; /* Ahora solo el botón mostrará que se puede cliquear */
 }
 
 /* Animación del brillo del botón */
