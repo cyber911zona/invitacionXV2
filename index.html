@@ -15,6 +15,15 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <audio id="bgMusic" loop>
+        <source src="mp3/Passenger - Let Her Go.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="musicToggle" class="music-control">
+        <span id="musicIcon">🔊</span>
+    </button>
+
+
     <div class="stars-layer"></div>
     
     <div class="bokeh-container">
@@ -40,9 +49,11 @@
                     <div class="pass-main-title">
                         <h1 class="pass-title">Jennifer Arlete</h1>
                         <p class="pass-subtitle">MIS XV AÑOS</p>
+                        <div id="mainCountdown" class="countdown-display"></div>
                     </div>
                     <div class="pass-info-grid">
-                        <div class="pass-data-item"><span>FECHA</span><p>19.12.26</p></div>
+                        
+                        <div class="pass-data-item"><span>FECHA</span><p>19.12.26</p> </div>
                         <div class="pass-data-item"><span>CEREMONIA</span><p>12:00 HRS</p></div>
                         <div class="pass-data-item"><span>RECEPCIÓN</span><p>16:00 HRS</p></div>
                     </div>
