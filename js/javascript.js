@@ -1,63 +1,54 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. LÓGICA PARA LEER NOMBRE Y NÚMERO DE PASES ---
-    const urlParams = new URLSearchParams(window.location.search);
-    
-    // Leemos el nombre (?n=)
-    const nombreInvitado = urlParams.get('n'); 
-    const displayNombre = document.getElementById('invitadoNombre');
+        // --- 2. LÓGICA DE APERTURA, CIERRE Y MÚSICA ---
+        const sealBtn = document.getElementById('bowBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const wrapper = document.getElementById('wrapper');
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
 
-    // Leemos los pases (&p=)
-    const pasesInvitado = urlParams.get('p'); 
-    const displayPases = document.getElementById('numPases');
+        // Función para abrir la invitación e iniciar música
+        if (sealBtn && wrapper) {
+            sealBtn.addEventListener('click', () => {
+                wrapper.classList.add('open');
+                document.body.style.overflow = 'auto'; 
+                
+                // Inicia la música al entrar
+                music.play().catch(error => console.log("Autoplay bloqueado:", error));
+                musicBtn.classList.add('visible');
+            });
+        }
 
-    // Inyectamos el nombre
-    if (nombreInvitado && displayNombre) {
-        // Convierte guiones bajos en espacios y pone todo en MAYÚSCULAS
-        displayNombre.innerText = nombreInvitado.replace(/_/g, ' ').toUpperCase();
-    }
+        // Lógica del botón de Silenciar/Reproducir
+        if (musicBtn) {
+            musicBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (music.paused) {
+                    music.play();
+                    musicIcon.innerText = "🔊";
+                } else {
+                    music.pause();
+                    musicIcon.innerText = "🔇";
+                }
+            });
+        }
 
-    // Inyectamos el número de pases
-    if (pasesInvitado && displayPases) {
-        displayPases.innerText = pasesInvitado;
-    } else if (displayPases) {
-        displayPases.innerText = "1"; // Valor por defecto si no hay número en el link
-    }
+        // Función para cerrar (Mantenemos tu sincronización perfecta)
+        if (closeBtn && wrapper) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                wrapper.classList.remove('open');
+                document.body.style.overflow = 'hidden';                          
+                
+                setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'instant' }); 
+                }, 1500); 
 
-    // --- 2. LÓGICA DE APERTURA Y CIERRE (SIN PARPADEO) ---
-    const sealBtn = document.getElementById('bowBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const wrapper = document.getElementById('wrapper');
-
-    // Función para abrir la invitación
-    if (sealBtn && wrapper) {
-        sealBtn.addEventListener('click', () => {
-            wrapper.classList.add('open');
-            document.body.style.overflow = 'auto'; 
-        });
-    }
-
-    // Función para cerrar (Sincronización perfecta)
-    if (closeBtn && wrapper) {
-        closeBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            
-            // Iniciamos el cierre del pergamino
-            wrapper.classList.remove('open');
-            
-            // Bloqueamos el scroll para evitar parpadeos blancos
-            document.body.style.overflow = 'hidden';
-            
-            // Regresamos al inicio a los 1.5 segundos (Justo antes de que aparezca la tarjeta)
-            setTimeout(() => {
-                window.scrollTo({ top: 0, behavior: 'instant' }); 
-            }, 1500); 
-
-            // Devolvemos el control del scroll al finalizar todo (1.8s)
-            setTimeout(() => {
-                document.body.style.overflow = 'auto';
-            }, 1800); 
-        });
-    }
+                setTimeout(() => {
+                    document.body.style.overflow = 'auto';
+                }, 1800); 
+            });
+        }
 
     // --- 3. LÓGICA PARA EL ACORDEÓN INTERACTIVO ---
     document.querySelectorAll('.accordion-header').forEach(header => {
@@ -74,3 +65,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// --- LÓGICA DEL CONTEO REGRESIVO DINÁMICO ---
+function actualizarContador() {
+    const fechaFiesta = new Date('2026-12-19T12:00:00').getTime();
+    const display = document.getElementById('mainCountdown');
+
+    const timer = setInterval(() => {
+        const ahora = new Date().getTime();
+        const diferencia = fechaFiesta - ahora;
+
+        if (diferencia <= 0) {
+            clearInterval(timer);
+            display.innerHTML = "¡ES HOY EL GRAN DÍA!";
+            return;
+        }
+
+        // Cálculos de tiempo
+        const d = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+        // Estructura visual bonita
+        display.innerHTML = `
+            <div class="countdown-unit"><span class="countdown-number">${d}</span><span class="countdown-label">Días</span></div>
+            <div class="countdown-unit"><span class="countdown-number">${h}</span><span class="countdown-label">Hrs</span></div>
+            <div class="countdown-unit"><span class="countdown-number">${m}</span><span class="countdown-label">Min</span></div>
+            <div class="countdown-unit"><span class="countdown-number">${s}</span><span class="countdown-label">Seg</span></div>
+        `;
+    }, 1000);
+}
+
+actualizarContador();
