@@ -34,17 +34,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const music = document.getElementById('bgMusic'); // Identifica la canción elegida
     const musicBtn = document.getElementById('musicToggle'); // Identifica el botón circular de la esquina
     const musicIcon = document.getElementById('musicIcon'); // Identifica el icono de la bocina que cambia
-
+    
+    
     // Abrir y reproducir (Lo que pasa al tocar el botón de entrar)
     if (sealBtn && wrapper) {
-        sealBtn.addEventListener('click', () => { // Cuando el invitado toca el pase:
-            wrapper.classList.add('open'); // Abre visualmente el pergamino
-            document.body.style.overflow = 'auto'; // Permite que el invitado pueda bajar para leer
-            if (music) {
-                music.play().catch(err => console.log("Audio bloqueado:", err)); // Inicia la canción automáticamente
-                musicBtn.classList.add('visible'); // Aparece el botón de silenciar en la esquina
-                musicIcon.innerText = "🔊"; // Pone el icono de sonido activo
-            }
+        sealBtn.addEventListener('click', () => {
+            // 1. LANZAR EL CONFETI DORADO
+            // Usamos los colores oro que ya tienes en tu CSS (#bf953f y #fcf6ba)
+            confetti({
+                particleCount: 150, // Cantidad de chispas
+                spread: 70,         // Qué tanto se abren hacia los lados
+                origin: { y: 0.6 }, // Altura desde donde salen
+                colors: ['#bf953f', '#fcf6ba', '#ffffff'], // Oro rico, oro brillante y blanco seda
+                ticks: 300          // Cuánto tiempo duran las chispas en pantalla
+            });
+
+            // 2. EFECTO DE VIBRACIÓN (Opcional)
+            sealBtn.style.transform = "scale(0.9)"; // El botón se encoge un poquito al tocarlo
+            
+            // 3. ABRIR LA INVITACIÓN (con un pequeño retraso para disfrutar el confeti)
+            setTimeout(() => {
+                wrapper.classList.add('open');
+                document.body.style.overflow = 'auto'; 
+                if (music) {
+                    music.play().catch(err => console.log("Audio bloqueado:", err));
+                    musicBtn.classList.add('visible');
+                    musicIcon.innerText = "🔊";
+                }
+            }, 300); // Espera 300 milisegundos para abrir el pergamino
         });
     }
 
