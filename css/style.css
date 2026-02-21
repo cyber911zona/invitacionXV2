@@ -46,7 +46,7 @@ body {
         radial-gradient(2.5px 2.5px at 100px 200px, var(--oro-brillante), rgba(0,0,0,0)),
         radial-gradient(2px 2px at 250px 350px, #fff, rgba(0,0,0,0));
     background-size: 300px 300px; /* Repite el patrón de estrellas por toda la pantalla */
-    opacity: 0.5; /* Hace que las estrellas sean un poco transparentes */
+    opacity: 0.8; /* Hace que las estrellas sean un poco transparentes */
     animation: twinkle 5s infinite ease-in-out; /* Parpadeo más lento y suave */
 }
 /* Grupo 1: Se prenden y apagan cada 3 segundos */
@@ -101,9 +101,9 @@ body {
 
 /* --- DISEÑO DE LA TARJETA (El Pase) --- */
 .glass-pass {
-    background: rgba(255, 255, 255, 0.03); /* Un blanco extremadamente transparente */
-    backdrop-filter: blur(12px); /* Efecto de vidrio empañado */
-    -webkit-backdrop-filter: blur(12px); /* Lo mismo, pero para navegadores de iPhone */
+    background: rgba(255, 255, 255, 0.02); /* Un blanco extremadamente transparente */
+    backdrop-filter: blur(4px); /* Efecto de vidrio empañado */
+    -webkit-backdrop-filter: blur(4px); /* Lo mismo, pero para navegadores de iPhone */
     border-radius: 20px; /* Redondea las esquinas de la tarjeta */
     padding: 12px; /* Espacio entre el borde de la tarjeta y el contenido */
     border: 1px solid rgba(252, 226, 163, 0.4); /* La línea delgadita dorada del borde */
@@ -852,4 +852,17 @@ section {
     font-size: 0.5rem; /* Letra muy chiquita */
     text-transform: uppercase; /* Todo en MAYÚSCULAS */
     opacity: 0.8; /* Un poquito transparente */
+}
+
+/* Efecto de vibración rápida cuando se presiona el botón */
+.pass-action-btn:active {
+    animation: shake 0.2s ease-in-out;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(5px); }
+    50% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
 }
